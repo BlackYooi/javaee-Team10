@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RECRUIT_LISTS</title>
+    <link rel="stylesheet" type="text/css" href="/asserts/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/asserts/bootstrap-3.3.7-dist/css/bootstrap-theme.css"/>
+    <script src="/asserts/js/vue.js" type="text/javascript"></script>
+</head>
+<body>
+
+<!--这个容器装了整个网页-->
+<div id="formwork_list" class="container-fluid">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label class="panel-title">提示信息：</label>
+            <label class="panel-title">{{msg}}</label>
+        </div>
+    </div>
+
+    <!--我的模板保存面板-->
+    <!--IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII-->
+    <div class="panel-heading">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">×
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+            我的简历模板
+        </h4>
+    </div>
+
+    <div class="panel-body">
+        <form class="form-horizontal" role="form" id="addForm">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">姓名</label>
+                <div class="form-group">
+                                <textarea class="form-control" style="width: 70%"
+                                          v-model="resume.name"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">年龄</label>
+                <div class="form-group">
+                                <textarea class="form-control" style="width: 70%"
+                                          v-model="resume.age"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">联系方式</label>
+                <div class="form-group">
+                                <textarea class="form-control" style="width: 70%"
+                                          v-model="resume.howToContact"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">工作经验</label>
+                <div class="form-group">
+                                <textarea class="form-control" style="width: 70%"
+                                          v-model="resume.workingYears"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">求职摘要</label>
+                <div class="form-group">
+                                <textarea class="form-control" style="width: 70%"
+                                          v-model="resume.jobSummary"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">项目经历</label>
+                <div class="form-group">
+                                <textarea class="form-control" style="width: 70%"
+                                          v-model="resume.projectExperience"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">教育经历</label>
+                <div class="form-group">
+                                <textarea class="form-control" style="width: 70%"
+                                          v-model="resume.educationExperience"></textarea>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="panel-footer">
+        <button type="button" class="btn btn-default" v-on:click="addComf()"
+                style="float: right">
+            提交
+        </button>
+    </div>
+    <!--IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII-->
+
+</div>
+
+
+</body>
+<script src="/asserts/js/axios.js" type="text/javascript"></script>
+<script src="/asserts/js/vue-resource.js" type="text/javascript"></script>
+<script src="/asserts/js/min.js" type="text/javascript"></script>
+<script src="/asserts/bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript"></script>
+<!--这里需要导入我们集成的vue-->
+<script>
+    new Vue({
+        el: '#formwork_list',
+        data() {
+            return {
+                msg: '',
+                resume: this.getNULLFORMWORK(),
+            }
+        },
+        mounted() {
+            //请求简历列表
+            axios
+                .get('http://localhost:8080/formwork')
+                .then(response => {
+                    if ("1" == response.data.data.msg) {
+                        this.resume = response.data.data.formwork;
+                        console.log(this.formwork);
+                    }
+                })
+                .catch(function (error) { // 请求失败处理
+                    console.log("请求服务器错误");
+                });
+        },
+        methods: {
+            getNULLFORMWORK() {
+                return {
+                    "name": "",
+                    "age": "",
+                    "howToContact": "",
+                    "workingYears": "",
+                    "jobSummary": "",
+                    "educationExperience": "",
+                    "projectExperience": "",
+                    "deliverId": "",
+                }
+            },
+            addComf() {
+                axios
+                    .post('http://localhost:8080/formwork', this.resume)
+                    .then(response => {
+                        if ("1" == response.data.data.msg) {
+                            this.msg = "提交成功！";
+                        } else {
+                            this.msg = "服务器未能成功向数据库添加数据"
+                            this.recruit = this.getNULLRECRUIT();
+                        }
+                    })
+                    .catch(function (error) { // 请求失败处理
+                        console.log("请求服务器错误");
+                    });
+            },
+        }
+    })
+</script>
+</html>

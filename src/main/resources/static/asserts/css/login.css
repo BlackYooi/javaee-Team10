@@ -1,0 +1,44 @@
+body {
+    background: url("../pic/login1.png");
+    /*  animation-name:myfirst;
+      !*动画播放所需时间*!
+      animation-duration:12s;
+      !*动画播放速度*!
+      animation-timing-function: linear;
+      !*用来指定动画的延迟时间*!
+      animation-delay:0s;
+      !*下一周期循环播放*!
+      animation-iteration-count:infinite;
+      !*用来控制动画的播放状态->动画开始运行*!
+      animation-play-state:running;*/
+}
+
+/*@keyframes myfirst
+{
+    0%   {background:url("../pic/login1.png");}
+    34%  {background:url("../pic/login2.png");}
+    67% {background:url("../pic/login3.png");}
+    100% {background:url("../pic/login1.png");}
+}*/
+.form {
+    background: rgba(255, 255, 255, 0.2);
+    width: 400px;
+    margin: 120px auto;
+}
+
+/*阴影*/
+.fa {
+    display: inline-block;
+    top: 27px;
+    left: 6px;
+    position: relative;
+    color: #ccc;
+}
+
+input[type="text"], input[type="password"] {
+    padding-left: 26px;
+}
+
+.checkbox {
+    padding-left: 21px;
+}

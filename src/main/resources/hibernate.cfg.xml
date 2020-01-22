@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/team10?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8&amp;serverTimezone=UTC</property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">qq85689049</property>
+        <!-- 数据库密码 -->
+        <!-- 数据库方言 ： 不同的数据库中，sql语法略有区别 ，指定方言可以让hibernate框架在生成sql语句时，根据 数据库方言生成。 -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- 可选属性（3个） -->
+        <!-- 将hibernate生成的sql语句打印到控制台 -->
+        <property name="hibernate.show_sql">true</property>
+        <!-- 将hibernate生成的sql语句格式化 -->
+        <property name="hibernate.format_sql">true</property>
+
+        <!--## auto schema export 自动导出表，构建表
+            #hibernate.hbm2ddl.auto create（每次框架运行完之后都会创建新表，之前的表会被覆盖。）
+            #hibernate.hbm2ddl.auto create-drop (每次框架运行完之后都会将所有表删除)
+            #hibernate.hbm2ddl.auto update （如果有表变动，会自动更新有改变的表）
+            #hibernate.hbm2ddl.auto validate（校验 ）不自动生成表-->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <!--使它正常级联保存-->
+        <property name="hibernate.event.merge.entity_copy_observer">allow</property>
+        <!-- 引入orm元数据 -->
+        <mapping class="com.kindblack.team10.POJO.Employee"/>
+        <mapping class="com.kindblack.team10.POJO.Department"/>
+        <mapping class="com.kindblack.team10.POJO.Position"/>
+        <mapping class="com.kindblack.team10.POJO.Recruit"/>
+        <mapping class="com.kindblack.team10.POJO.MyResumeFormwork"/>
+        <mapping class="com.kindblack.team10.POJO.Resume"/>
+        <mapping class="com.kindblack.team10.POJO.Permission.UserInfo"/>
+        <mapping class="com.kindblack.team10.POJO.Permission.Permission"/>
+    </session-factory>
+</hibernate-configuration>
